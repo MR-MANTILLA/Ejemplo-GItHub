@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <title>Vue.js </title>
+</head>
+
+<body>
+    <div id="elemento">
+        {{contenido}}
+        <input type="text" v-model="nuevoLenguaje" @keyup.enter="agregarLenguaje" />
+        <input type="text" v-model="nuevoLink" @keyup.enter="agregarLenguaje" />
+        <input type="text" v-model.numer="nuevoPunto" @keyup.enter="agregarLenguaje" />
+        <button @click=" agregarLenguaje ">Agregar Lenguaje</button>
+        <ul>
+            <li v-for="lenguaje of lenguajes ">
+                <a :href="lenguaje.link " target="_blank "> {{lenguaje.nombre}}</a>{{lenguaje.puntos}}
+                <button @click="lenguaje.puntos++">+</button>
+                <button @click="lenguaje.puntos--">-</button>
+            </li>
+        </ul>
+        Suma de todos los votos{{sumarTodo}}
+    </div>
+
+
+
+    </div>
+</body>
+/
+<script src=" https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js "></script>
+
+<script>
+    const con = new Vue({
+        el: "#elemento ",
+        data: {
+            contenido: "hola mundo",
+            lenguajes: [ //'javascript', 'Phyton', 'php'
+                {
+                    nombre: "JavaScript ",
+                    link: 'https://developer.mozilla.org/es/docs/Web/JavaScript',
+                    puntos: 0
+                }, {
+                    nombre: "Phyton ",
+                    link: 'https://www.python.org',
+                    puntos: 10
+                }, {
+                    nombre: "PHP ",
+                    link: 'https://www.php.net/manual/es/intro-whatis.php',
+                    puntos: 0
+                }
+            ],
+            nuevoLenguaje: '',
+            nuevoLink: '',
+            nuevoPunto: 0,
+            total: 0
+        },
+
+
+
+        methods: {
+            agregarLenguaje() {
+                //console.log('click');
+                this.lenguajes.push({
+                    nombre: this.nuevoLenguaje,
+                    link: this.nuevoLink,
+                    puntos: this.nuevoPunto
+                })
+                this.nuevoLenguaje = '';
+                this.nuevoLink = '';
+
+
+            }
+        },
+        computed: {
+            sumarTodo() {
+                this.total = 0;
+                for (lenguaje of this.lenguajes) {
+                    this.total = this.total + lenguaje.puntos;
+                }
+                return this.total;
+            }
+        }
+    })
+</script>
+
+</html>
